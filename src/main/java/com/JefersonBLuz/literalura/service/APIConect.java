@@ -6,7 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class ConectAPI {
+public class APIConect {
     private final HttpClient client = HttpClient.newHttpClient();
 
     public String obterDados(String endereco) {
