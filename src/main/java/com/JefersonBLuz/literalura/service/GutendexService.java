@@ -1,11 +1,13 @@
 package com.JefersonBLuz.literalura.service;
 
-import com.JefersonBLuz.literalura.entidades.AutorAPI;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.JefersonBLuz.literalura.dto.AutorDTO;
+import com.JefersonBLuz.literalura.dto.GutendexResponseDTO;
+import com.JefersonBLuz.literalura.dto.LivroDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class GutendexService {
@@ -20,18 +22,18 @@ public class GutendexService {
         this.objectMapper = new ObjectMapper();
     }
 
-    public GutendexResponse buscarLivrosPorTermo(String termo) {
-        String url = BASE_URL + "?search=" + termo.replace(" ", "%20");
+    public GutendexResponseDTO buscarLivrosPorTermo(String termo) {
+        String url = BASE_URL + "/?search=" + URLEncoder.encode(termo, StandardCharsets.UTF_8);
         String json = apiConect.obterDados(url);
         try {
-            return objectMapper.readValue(json, GutendexResponse.class);
+            return objectMapper.readValue(json, GutendexResponseDTO.class);
         } catch (IOException e) {
             throw new RuntimeException("Erro ao converter resposta da API Gutendex.", e);
         }
     }
 
-    public List<Book> buscarPrimeirosLivrosPorTermo(String termo, int limite) {
-        GutendexResponse resposta = buscarLivrosPorTermo(termo);
+    public List<LivroDTO> buscarPrimeirosLivrosPorTermo(String termo, int limite) {
+        GutendexResponseDTO resposta = buscarLivrosPorTermo(termo);
         if (resposta.results() == null) {
             return List.of();
         }
@@ -43,36 +45,16 @@ public class GutendexService {
     /**
      * Retorna apenas os autores (em uma lista simples) a partir da busca.
      */
-    public List<AutorAPI> buscarAutoresPorTermo(String termo) {
-        GutendexResponse resposta = buscarLivrosPorTermo(termo);
+    public List<AutorDTO> buscarAutoresPorTermo(String termo) {
+        GutendexResponseDTO resposta = buscarLivrosPorTermo(termo);
+        if (resposta.results() == null) {
+            return List.of();
+        }
         return resposta.results().stream()
+                .filter(livro -> livro.authors() != null)
                 .flatMap(livro -> livro.authors().stream())
-                .map(a -> new AutorAPI(a.name(), a.birthYear(), a.deathYear()))
                 .distinct()
                 .toList();
     }
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record GutendexResponse(
-            int count,
-            String next,
-            String previous,
-            List<Book> results
-    ) {}
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Book(
-            int id,
-            String title,
-            List<Person> authors,
-            @JsonProperty("download_count") int downloadCount
-    ) {}
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record Person(
-            @JsonProperty("birth_year") Integer birthYear,
-            @JsonProperty("death_year") Integer deathYear,
-            String name
-    ) {}
 }
 
