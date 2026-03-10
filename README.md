@@ -6,6 +6,12 @@
   <img width="410" height="410" alt="Image" src="https://github.com/user-attachments/assets/65542313-ae6a-46a0-ad44-354395b9fe30" />
 </p>
 
+<h1 align="center">📚 Literalura</h1>
+
+<p align="center">
+  <img src="URL_DA_SUA_IMAGEM_AQUI" alt="Capa do Projeto Literalura" width="700">
+</p>
+
 <p align="center">
   <img src="https://img.shields.io/badge/Java-21-orange" alt="Java 21">
   <img src="https://img.shields.io/badge/Spring%20Boot-4.x-brightgreen" alt="Spring Boot">
@@ -26,8 +32,8 @@
 * [🖥️ Demonstração](#️-demonstração)
 * [🛠️ Tecnologias e Ferramentas](#️-tecnologias-e-ferramentas)
 * [🗄️ Banco de Dados](#️-banco-de-dados)
-* [⚙️ Como Executar](#️-como-executar)
-* [🔖 Versionamento](#-versionamento)
+* [⚙️ Configuração e Execução](#️-configuração-e-execução)
+* [🔖 Versionamento e Tags](#-versionamento-e-tags)
 * [👨‍💻 Autor](#-autor)
 
 ---
@@ -88,41 +94,69 @@ Um livro pode ter vários autores e um autor pode ter escrito vários livros.
 
 ---
 
-## ⚙️ Como Executar
+## ⚙️ Configuração e Execução
 
-1. **Clone o repositório:**
+### 1. Clonar o repositório
 ```bash
 git clone [https://github.com/JefersonBLuz/NOME_DO_SEU_REPOSITORIO.git](https://github.com/JefersonBLuz/NOME_DO_SEU_REPOSITORIO.git)
 ```
 
-2. **Configure o Banco de Dados:**
-Crie um banco no PostgreSQL chamado `literalura`. Configure as variáveis de ambiente na sua máquina ou no arquivo `application.properties`:
-```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=literalura
-DB_USER=seu_usuario
-DB_PASSWORD=sua_senha
+### 2. Criar o Banco de Dados
+Crie um banco de dados no PostgreSQL chamado `literalura`.
+
+### 3. Configurar as Credenciais do Banco
+Você pode configurar a conexão com o PostgreSQL de duas maneiras diferentes. Escolha a que melhor se adapta ao seu ambiente:
+
+**Opção A: Diretamente no arquivo (Mais rápido para testes locais)**
+Abra o arquivo `src/main/resources/application.properties` e substitua as variáveis (os valores com `$`) diretamente pelos seus dados locais:
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/literalura
+spring.datasource.username=seu_usuario_postgres
+spring.datasource.password=sua_senha_postgres
 ```
 
-3. **Rode a aplicação:**
-Execute a classe `LiteraluraApplication.java` pela sua IDE ou via Maven:
+**Opção B: Variáveis de Ambiente no Windows (Recomendado e mais seguro)**
+Mantenha o arquivo `application.properties` intacto com as variáveis (`${DB_HOST}`, `${DB_USER}`, etc.) e configure-as no seu sistema:
+1. Pressione a tecla `Windows` e digite **"Editar as variáveis de ambiente do sistema"**.
+2. Na janela que abrir, clique no botão **"Variáveis de Ambiente..."** na parte inferior.
+3. Na seção "Variáveis de usuário", clique em **"Novo..."** e adicione uma por uma:
+   * Nome: `DB_HOST` | Valor: `localhost`
+   * Nome: `DB_PORT` | Valor: `5432`
+   * Nome: `DB_NAME` | Valor: `literalura`
+   * Nome: `DB_USER` | Valor: `seu_usuario_postgres`
+   * Nome: `DB_PASSWORD` | Valor: `sua_senha_postgres`
+4. **Importante:** Feche e abra novamente a sua IDE ou terminal para que o sistema reconheça as novas variáveis.
+
+### 4. Rodar a aplicação
+Execute a classe `LiteraluraApplication.java` pela sua IDE ou utilize o Maven pelo terminal:
 ```bash
 ./mvnw spring-boot:run
 ```
 
 ---
 
-## 🔖 Versionamento
+## 🔖 Versionamento e Tags
 
 Este projeto utiliza [Git](https://git-scm.com/) para controle de versão.
 
-**Versão atual:** `v1.0.0`
+A versão atual da aplicação é a **`v1.0.0`**. 
+
+Para fins de documentação, os seguintes comandos foram utilizados para criar e publicar esta versão no repositório:
+
+```bash
+# Criar a tag da versão final
+git tag -a v1.0.0 -m "Lançamento da primeira versão do projeto Literalura"
+
+# Enviar a tag para o repositório remoto (GitHub)
+git push origin v1.0.0
+```
 
 ---
 
 ## 👨‍💻 Autor
 
-Feito com dedicação por **Jeferson Braga Luz**.
+Desenvolvido por **Jeferson Braga Luz**.
 
-[![GitHub](https://img.shields.io/badge/GitHub-JefersonBLuz-181717?style=flat-square&logo=github)](https://github.com/JefersonBLuz)
+[![GitHub](https://img.shields.io/badge/GitHub-JefersonBLuz-181717?style=flat-square&logo=github)](https://github.com/JefersonBLuz) 
+[![Website](https://img.shields.io/badge/Website-jefersonbraga.cloud-0052CC?style=flat-square&logo=google-chrome&logoColor=white)](https://jefersonbraga.cloud)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-Contato-25D366?style=flat-square&logo=whatsapp&logoColor=white)](https://wa.me/557196585476)
