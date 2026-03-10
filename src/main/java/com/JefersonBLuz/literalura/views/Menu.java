@@ -1,13 +1,15 @@
 package com.JefersonBLuz.literalura.views;
 
+import com.JefersonBLuz.literalura.service.CatalogoLivrosService;
+import com.JefersonBLuz.literalura.service.GutendexService;
 import com.JefersonBLuz.literalura.utils.Utilidades;
-import com.JefersonBLuz.literalura.views.metodos.BuscaLivroPorTituloView;
 
 import java.util.Scanner;
 
 public class Menu {
     private final Utilidades uteis = new Utilidades();
-    private final BuscaLivroPorTituloView buscaLivroPorTituloView = new BuscaLivroPorTituloView();
+    private final MetodoListagemView metodoListagemView =
+            new MetodoListagemView(new GutendexService(), new CatalogoLivrosService());
     private static final int LARGURA_BARRA = 50;
 
     public void iniciar() {
@@ -19,6 +21,8 @@ public class Menu {
             uteis.CentralizadorMenssagem("Bem vindo ao LiterAlura", LARGURA_BARRA);
             uteis.exibirBarra(LARGURA_BARRA);
             System.out.println("1 - Buscar livro pelo título");
+            System.out.println("2 - Listagem de todos os livros");
+            System.out.println("3 - Listar livros por idioma");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opcao: ");
 
@@ -30,14 +34,11 @@ public class Menu {
             }
 
             switch (opcao) {
-                case 1:
-                    buscaLivroPorTituloView.executar(leitura);
-                    break;
-                case 0:
-                    System.out.println("Saindo do LiterAlura...");
-                    break;
-                default:
-                    System.out.println("Opcao invalida.");
+                case 1 -> metodoListagemView.buscarLivroPorTitulo(leitura);
+                case 2 -> metodoListagemView.listarTodosLivros();
+                case 3 -> metodoListagemView.listarLivrosPorIdioma(leitura);
+                case 0 -> System.out.println("Saindo do LiterAlura...");
+                default -> System.out.println("Opcao invalida.");
             }
         }
     }
