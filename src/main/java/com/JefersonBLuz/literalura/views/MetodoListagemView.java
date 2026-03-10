@@ -1,10 +1,13 @@
 package com.JefersonBLuz.literalura.views;
 
+import com.JefersonBLuz.literalura.model.Livro;
 import com.JefersonBLuz.literalura.service.CatalogoLivrosService;
 import com.JefersonBLuz.literalura.service.GutendexService;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class MetodoListagemView {
 
     private final GutendexService gutendexService;
@@ -27,25 +30,17 @@ public class MetodoListagemView {
             }
 
             var livro = livros.getFirst();
-            catalogoLivrosService.adicionarLivro(livro);
-
-            String autor = (livro.authors() != null && !livro.authors().isEmpty())
-                    ? livro.authors().getFirst().name()
-                    : "Autor desconhecido";
-
-            String idioma = (livro.languages() != null && !livro.languages().isEmpty())
-                    ? livro.languages().getFirst()
-                    : "Idioma desconhecido";
+            Livro livroSalvo = catalogoLivrosService.adicionarLivro(livro);
 
             System.out.println("Livro adicionado ao catalogo:");
             System.out.println(
-                    "Titulo: " + livro.title()
-                            + " | Autor: " + autor
-                            + " | Idioma: " + idioma
-                            + " | Downloads: " + livro.downloadCount()
+                    "Titulo: " + livroSalvo.getTitulo()
+                            + " | Autor: " + livroSalvo.getAutor().getNome()
+                            + " | Idioma: " + livroSalvo.getIdioma()
+                            + " | Downloads: " + livroSalvo.getDownloads()
             );
         } catch (RuntimeException e) {
-            System.out.println("Erro ao consultar a API: " + e.getMessage());
+            System.out.println("Erro ao buscar e salvar livro: " + e.getMessage());
         }
     }
 
@@ -58,10 +53,10 @@ public class MetodoListagemView {
 
         System.out.println("Livros no catalogo:");
         livros.forEach(livro -> System.out.println(
-                "Titulo: " + livro.titulo()
-                        + " | Autor: " + livro.autor()
-                        + " | Idioma: " + livro.idioma()
-                        + " | Downloads: " + livro.downloads()
+                "Titulo: " + livro.getTitulo()
+                        + " | Autor: " + livro.getAutor().getNome()
+                        + " | Idioma: " + livro.getIdioma()
+                        + " | Downloads: " + livro.getDownloads()
         ));
     }
 
@@ -77,10 +72,10 @@ public class MetodoListagemView {
 
         System.out.println("Livros no idioma '" + idioma + "':");
         livros.forEach(livro -> System.out.println(
-                "Titulo: " + livro.titulo()
-                        + " | Autor: " + livro.autor()
-                        + " | Idioma: " + livro.idioma()
-                        + " | Downloads: " + livro.downloads()
+                "Titulo: " + livro.getTitulo()
+                        + " | Autor: " + livro.getAutor().getNome()
+                        + " | Idioma: " + livro.getIdioma()
+                        + " | Downloads: " + livro.getDownloads()
         ));
     }
 
@@ -93,9 +88,9 @@ public class MetodoListagemView {
 
         System.out.println("Autores no catalogo:");
         autores.forEach(autor -> System.out.println(
-                "Nome: " + autor.nome()
-                        + " | Nascimento: " + autor.anoNascimento()
-                        + " | Falecimento: " + autor.anoFalecimento()
+                "Nome: " + autor.getNome()
+                        + " | Nascimento: " + autor.getAnoNascimento()
+                        + " | Falecimento: " + autor.getAnoFalecimento()
         ));
     }
 
@@ -119,9 +114,9 @@ public class MetodoListagemView {
 
         System.out.println("Autores vivos no ano " + ano + ":");
         autores.forEach(autor -> System.out.println(
-                "Nome: " + autor.nome()
-                        + " | Nascimento: " + autor.anoNascimento()
-                        + " | Falecimento: " + autor.anoFalecimento()
+                "Nome: " + autor.getNome()
+                        + " | Nascimento: " + autor.getAnoNascimento()
+                        + " | Falecimento: " + autor.getAnoFalecimento()
         ));
     }
 }

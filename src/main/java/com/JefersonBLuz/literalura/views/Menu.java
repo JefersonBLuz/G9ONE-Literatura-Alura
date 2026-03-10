@@ -1,16 +1,19 @@
 package com.JefersonBLuz.literalura.views;
 
-import com.JefersonBLuz.literalura.service.CatalogoLivrosService;
-import com.JefersonBLuz.literalura.service.GutendexService;
 import com.JefersonBLuz.literalura.utils.Utilidades;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class Menu {
     private final Utilidades uteis = new Utilidades();
-    private final MetodoListagemView metodoListagemView =
-            new MetodoListagemView(new GutendexService(), new CatalogoLivrosService());
+    private final MetodoListagemView metodoListagemView;
     private static final int LARGURA_BARRA = 50;
+
+    public Menu(MetodoListagemView metodoListagemView) {
+        this.metodoListagemView = metodoListagemView;
+    }
 
     public void iniciar() {
         Scanner leitura = new Scanner(System.in);

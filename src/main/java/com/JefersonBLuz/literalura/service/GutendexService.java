@@ -4,12 +4,14 @@ import com.JefersonBLuz.literalura.dto.AutorDTO;
 import com.JefersonBLuz.literalura.dto.GutendexResponseDTO;
 import com.JefersonBLuz.literalura.dto.LivroDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+@Service
 public class GutendexService {
 
     private static final String BASE_URL = "https://gutendex.com/books";
@@ -17,18 +19,21 @@ public class GutendexService {
     private final APIConect apiConect;
     private final ObjectMapper objectMapper;
 
-    public GutendexService() {
-        this.apiConect = new APIConect();
+    public GutendexService(APIConect apiConect) {
+        this.apiConect = apiConect;
         this.objectMapper = new ObjectMapper();
     }
 
     public GutendexResponseDTO buscarLivrosPorTermo(String termo) {
+        if (termo == null || termo.isBlank()) {
+            throw new RuntimeException("Informe um titulo valido para busca.");
+        }
         String url = BASE_URL + "/?search=" + URLEncoder.encode(termo, StandardCharsets.UTF_8);
         String json = apiConect.obterDados(url);
         try {
             return objectMapper.readValue(json, GutendexResponseDTO.class);
         } catch (IOException e) {
-            throw new RuntimeException("Erro ao converter resposta da API Gutendex.", e);
+            throw new RuntimeException("Erro ao converter dados recebidos da API Gutendex.", e);
         }
     }
 

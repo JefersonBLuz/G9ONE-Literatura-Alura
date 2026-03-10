@@ -9,13 +9,18 @@ import com.JefersonBLuz.literalura.views.Menu;
 @SpringBootApplication
 public class LiteraluraApplication implements CommandLineRunner {
 
+	private final Menu menu;
+
+	public LiteraluraApplication(Menu menu) {
+		this.menu = menu;
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(LiteraluraApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		Menu menu = new Menu();
 		menu.iniciar();
 	}
 }
