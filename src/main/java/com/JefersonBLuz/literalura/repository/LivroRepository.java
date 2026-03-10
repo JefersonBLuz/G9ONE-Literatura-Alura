@@ -12,4 +12,6 @@ public interface LivroRepository extends JpaRepository<Livro, Long> {
     Optional<Livro> findByGutendexId(Integer gutendexId);
 
     List<Livro> findByIdiomaIgnoreCase(String idioma);
+
+    long countByIdiomaIgnoreCase(String idioma);
 }

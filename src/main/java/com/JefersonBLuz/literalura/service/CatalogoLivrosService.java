@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class CatalogoLivrosService {
@@ -108,6 +109,24 @@ public class CatalogoLivrosService {
         } catch (DataAccessException e) {
             throw new RuntimeException("Erro ao listar livros por idioma no banco de dados.", e);
         }
+    }
+
+    public long contarLivrosPorIdioma(String idioma) {
+        try {
+            return livroRepository.countByIdiomaIgnoreCase(idioma);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("Erro ao contar livros por idioma no banco de dados.", e);
+        }
+    }
+
+    public Map<String, Long> estatisticasIdiomasFixos(List<String> idiomas) {
+        return idiomas.stream()
+                .collect(Collectors.toMap(
+                        idioma -> idioma,
+                        this::contarLivrosPorIdioma,
+                        (a, b) -> a,
+                        LinkedHashMap::new
+                ));
     }
 
     public List<Autor> listarAutores() {

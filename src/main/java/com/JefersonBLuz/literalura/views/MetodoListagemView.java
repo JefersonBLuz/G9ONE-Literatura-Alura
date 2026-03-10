@@ -5,6 +5,7 @@ import com.JefersonBLuz.literalura.service.CatalogoLivrosService;
 import com.JefersonBLuz.literalura.service.GutendexService;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -118,5 +119,15 @@ public class MetodoListagemView {
                         + " | Nascimento: " + autor.getAnoNascimento()
                         + " | Falecimento: " + autor.getAnoFalecimento()
         ));
+    }
+
+    public void exibirEstatisticasPorIdioma() {
+        List<String> idiomas = List.of("en", "pt");
+        var estatisticas = catalogoLivrosService.estatisticasIdiomasFixos(idiomas);
+
+        System.out.println("Quantidade de livros por idioma:");
+        estatisticas.forEach((idioma, quantidade) ->
+                System.out.println("Idioma '" + idioma + "': " + quantidade + " livro(s)")
+        );
     }
 }

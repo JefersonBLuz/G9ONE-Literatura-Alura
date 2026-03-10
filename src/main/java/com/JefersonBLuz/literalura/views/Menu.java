@@ -28,6 +28,7 @@ public class Menu {
             System.out.println("3 - Listar livros por idioma");
             System.out.println("4 - Listar autores");
             System.out.println("5 - Listar autores vivos em um ano");
+            System.out.println("6 - Estatísticas de livros por idioma (en/pt)");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opcao: ");
 
@@ -44,6 +45,7 @@ public class Menu {
                 case 3 -> metodoListagemView.listarLivrosPorIdioma(leitura);
                 case 4 -> metodoListagemView.listarAutores();
                 case 5 -> metodoListagemView.listarAutoresVivosNoAno(leitura);
+                case 6 -> metodoListagemView.exibirEstatisticasPorIdioma();
                 case 0 -> System.out.println("Saindo do LiterAlura...");
                 default -> System.out.println("Opcao invalida.");
             }
