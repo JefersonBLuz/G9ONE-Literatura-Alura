@@ -84,4 +84,44 @@ public class MetodoListagemView {
         ));
     }
 
-  }
+    public void listarAutores() {
+        var autores = catalogoLivrosService.listarAutores();
+        if (autores.isEmpty()) {
+            System.out.println("Nenhum autor foi salvo ainda.");
+            return;
+        }
+
+        System.out.println("Autores no catalogo:");
+        autores.forEach(autor -> System.out.println(
+                "Nome: " + autor.nome()
+                        + " | Nascimento: " + autor.anoNascimento()
+                        + " | Falecimento: " + autor.anoFalecimento()
+        ));
+    }
+
+    public void listarAutoresVivosNoAno(Scanner leitura) {
+        System.out.print("Digite o ano para consulta: ");
+        String entradaAno = leitura.nextLine();
+
+        int ano;
+        try {
+            ano = Integer.parseInt(entradaAno);
+        } catch (NumberFormatException e) {
+            System.out.println("Ano invalido.");
+            return;
+        }
+
+        var autores = catalogoLivrosService.listarAutoresVivosNoAno(ano);
+        if (autores.isEmpty()) {
+            System.out.println("Nenhum autor vivo encontrado no ano informado.");
+            return;
+        }
+
+        System.out.println("Autores vivos no ano " + ano + ":");
+        autores.forEach(autor -> System.out.println(
+                "Nome: " + autor.nome()
+                        + " | Nascimento: " + autor.anoNascimento()
+                        + " | Falecimento: " + autor.anoFalecimento()
+        ));
+    }
+}

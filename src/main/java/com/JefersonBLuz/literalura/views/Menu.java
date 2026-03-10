@@ -23,6 +23,8 @@ public class Menu {
             System.out.println("1 - Buscar livro pelo título");
             System.out.println("2 - Listagem de todos os livros");
             System.out.println("3 - Listar livros por idioma");
+            System.out.println("4 - Listar autores");
+            System.out.println("5 - Listar autores vivos em um ano");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opcao: ");
 
@@ -37,6 +39,8 @@ public class Menu {
                 case 1 -> metodoListagemView.buscarLivroPorTitulo(leitura);
                 case 2 -> metodoListagemView.listarTodosLivros();
                 case 3 -> metodoListagemView.listarLivrosPorIdioma(leitura);
+                case 4 -> metodoListagemView.listarAutores();
+                case 5 -> metodoListagemView.listarAutoresVivosNoAno(leitura);
                 case 0 -> System.out.println("Saindo do LiterAlura...");
                 default -> System.out.println("Opcao invalida.");
             }
